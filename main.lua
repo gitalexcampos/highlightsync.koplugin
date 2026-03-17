@@ -203,8 +203,8 @@ function Highlightsync:onSync(local_path, cached_path, income_path, reload)
         self.ui.annotation.annotations = DataAnnotations
         if reload then
             is_reloading_due_to_sync = true
-            UIManager:tickAfterNext(function()
-            self.ui:reloadDocument()
+            UIManager:nextTick(function()
+                self.ui:reloadDocument()
             end)
         end
     end
