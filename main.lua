@@ -194,7 +194,12 @@ function Highlightsync:onSync(local_path, cached_path, income_path, reload)
     local cached_highlights = read_json_file(cached_path) or {}
     local income_highlights = read_json_file(income_path) or {}
 
-    local annotations = Merge.Merge_highlights(local_highlights,income_highlights,cached_highlights)
+    local annotations, local_changed = Merge.Merge_highlights(local_highlights, income_highlights, cached_highlights)
+
+    if not local_changed then
+        logger.dbg("Highlightsync: no changes after merge, skipping reload")
+        return true
+    end
 
     write_json_file(SidecarDir .. "/" .. FileName .. ".json", annotations) -- Save annotations local
     DataAnnotations = annotations
@@ -208,7 +213,7 @@ function Highlightsync:onSync(local_path, cached_path, income_path, reload)
             end)
         end
     end
-  
+
     return true
 end
 

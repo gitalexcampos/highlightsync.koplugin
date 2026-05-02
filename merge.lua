@@ -18,7 +18,11 @@ end
 local function get_newer(item1, item2)
     local t1 = parse_datetime(get_datetime(item1))
     local t2 = parse_datetime(get_datetime(item2))
-    return t1 >= t2 and item1 or item2
+    if t1 > t2 then return item1, true end
+    if t2 > t1 then return item2, true end
+    -- Equal timestamps: keep local to avoid false-positive change detection
+    -- (server and local are different table instances even when identical)
+    return item2, false
 end
 
 -- Generate a stable key using pos0+pos1 (XPath positions) which are consistent
@@ -50,6 +54,7 @@ local function merge_highlights(local_annotations, server_annotations, last_sync
     local last_sync_map = convert_to_map(last_sync_annotations or {})
 
     local merged = {}
+    local local_changed = false
 
     -- Processa os highlights locais
     for key, local_highlight in pairs(local_map) do
@@ -57,6 +62,9 @@ local function merge_highlights(local_annotations, server_annotations, last_sync
         local last_sync_highlight = last_sync_map[key]
         if not (server_highlight == nil and last_sync_highlight ~= nil) then
             merged[key] = local_highlight
+        else
+            -- Deleted on server since last sync
+            local_changed = true
         end
     end
 
@@ -67,8 +75,13 @@ local function merge_highlights(local_annotations, server_annotations, last_sync
         else
             if not local_map[key] then
                 merged[key] = server_highlight
+                local_changed = true
             else
-                merged[key] = get_newer(server_highlight, local_map[key])
+                local newer, changed = get_newer(server_highlight, local_map[key])
+                merged[key] = newer
+                if changed then
+                    local_changed = true
+                end
             end
         end
     end
@@ -105,7 +118,7 @@ local function merge_highlights(local_annotations, server_annotations, last_sync
         return a.pos0 < b.pos0
     end)
 
-    return merged_annotations
+    return merged_annotations, local_changed
 end
 
 local M = {}
