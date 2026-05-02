@@ -1,0 +1,61 @@
+# Highlight Sync 插件简体中文翻译
+# Copyright (C) 2025 THE PACKAGE'S COPYRIGHT HOLDER
+# 本文件与 PACKAGE 包使用相同许可证。
+#
+msgid   ""
+msgstr  "Project-Id-Version: highlightsync.koplugin\n"
+        "Report-Msgid-Bugs-To: \n"
+        "POT-Creation-Date: 2025-01-01 12:00+0800\n"
+        "PO-Revision-Date: 2025-01-01 12:00+0800\n"
+        "Last-Translator: \n"
+        "Language-Team: \n"
+        "Language: 简体中文 (zh_CN)\n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+        "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../_meta.lua:5
+msgid   "Synchronize book highlights across devices using cloud storage (WebDAV/Dropbox)."
+msgstr  "使用云存储（WebDAV/Dropbox）跨设备同步书籍高亮。"
+
+#: ../main.lua:69
+msgid   "Highlight Sync"
+msgstr  "高亮同步"
+
+#: ../main.lua:119
+msgid   "Syncing book highlights. This may take a while."
+msgstr  "正在同步书籍高亮，请稍候。"
+
+#: ../main.lua:142
+msgid   "Sync Cloud"
+msgstr  "云端设置"
+
+#: ../main.lua:162
+msgid   "Delete"
+msgstr  "删除"
+
+#: ../main.lua:166
+msgid   "Delete server info?"
+msgstr  "删除服务器信息？"
+
+#: ../main.lua:167
+msgid   "Cancel"
+msgstr  "取消"
+
+#: ../main.lua:179
+msgid   "Edit"
+msgstr  "编辑"
+
+#: ../main.lua:186
+msgid   "Close"
+msgstr  "关闭"
+
+#: ../main.lua:193
+#, lua-format
+msgid   "Cloud storage:\n%1\n\nFolder path:\n%2\n\nSet up the same cloud folder on each device to sync across your devices."
+msgstr  "云存储：\n%1\n\n文件夹路径：\n%2\n\n在每台设备上设置相同的云文件夹以实现跨设备同步。"
+
+#: ../main.lua:205
+msgid   "Sync Highlights"
+msgstr  "同步"
