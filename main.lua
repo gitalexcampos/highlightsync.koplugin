@@ -154,7 +154,11 @@ function Highlightsync:onReaderReady()
 
     if self.settings.sync_on_open and self:canSync() then
         UIManager:nextTick(function()
-            self:SyncBookHighlights(false, true)
+            -- Only sync if WiFi is already on; avoid forcing WiFi on (or
+            -- erroring out) when the book is opened offline. Mirrors onResume.
+            if NetworkMgr:isWifiOn() then
+                self:SyncBookHighlights(false, true)
+            end
         end)
     end
 end
@@ -168,7 +172,11 @@ function Highlightsync:onCloseDocument()
 
     if self.settings.sync_on_close and self:canSync() then
         -- Sincroniza e sai (sem reload, pois estamos saindo)
-        self:SyncBookHighlights(false, false) 
+        -- Only sync if WiFi is already on; avoid forcing WiFi on (or
+        -- erroring out) when the book is closed offline. Mirrors onResume.
+        if NetworkMgr:isWifiOn() then
+            self:SyncBookHighlights(false, false)
+        end
     end
 end
 
